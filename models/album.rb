@@ -48,5 +48,11 @@ class Album
     SqlRunner.run(sql,values)
   end
 
+  def self.find_albums_by_name(name_of_album)
+    sql = "SELECT * FROM albums WHERE name = $1"
+    values = [name_of_album]
+    results = SqlRunner.run(sql, values)
+    return results.map {|album| Album.new(album)}
+  end
 
 end
