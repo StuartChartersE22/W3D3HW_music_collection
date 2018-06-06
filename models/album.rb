@@ -63,7 +63,7 @@ class Album
   end
 
   def change_artist(id)
-    sql = "SELECT * FROM artists WHERE id = $1"
+    sql = "SELECT id FROM artists WHERE id = $1"
     values = [id]
     result = SqlRunner.run(sql, values)
     @artist_id = id if result.values().length() != 0
