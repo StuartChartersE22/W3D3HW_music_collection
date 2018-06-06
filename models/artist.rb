@@ -46,5 +46,11 @@ class Artist
     SqlRunner.run(sql,values)
   end
 
+  def self.find_artists_by_name(name_of_artists)
+    sql = "SELECT * FROM artists WHERE name = $1"
+    values = [name_of_artists]
+    results = SqlRunner.run(sql, values)
+    return results.map {|artist| Artist.new(artist)}
+  end
 
 end
