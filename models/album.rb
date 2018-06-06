@@ -48,6 +48,19 @@ class Album
     SqlRunner.run(sql,values)
   end
 
+  def change_artist(id)
+    sql = "SELECT id FROM artists WHERE id = $1"
+    values = [id]
+    result = SqlRunner.run(sql, values)
+    @artist_id = id if result.values().length() != 0
+  end
+
+  def delete()
+    sql = "DELETE FROM albums WHERE id = $1"
+    values = [@id]
+    SqlRunner.run(sql, values)
+  end
+
   def self.find_albums_by_name(name_of_album)
     sql = "SELECT * FROM albums WHERE name = $1"
     values = [name_of_album]
@@ -62,11 +75,10 @@ class Album
     return Album.new(results[0])
   end
 
-  def change_artist(id)
-    sql = "SELECT id FROM artists WHERE id = $1"
+  def self.delete(id)
+    sql = "DELETE FROM albums WHERE id = $1"
     values = [id]
-    result = SqlRunner.run(sql, values)
-    @artist_id = id if result.values().length() != 0
+    SqlRunner.run(sql, values)
   end
 
 end
