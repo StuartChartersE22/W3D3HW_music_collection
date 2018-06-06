@@ -73,6 +73,13 @@ class Artist
     return Artist.new(results[0])
   end
 
+  def self.find_artists_by_genre(genre)
+    sql = "SELECT artist_id FROM albums WHERE genre = $1"
+    values = [genre]
+    results = SqlRunner.run(sql, values).values().flatten()
+    return results.map {|id| self.find_artist_by_id(id)}
+  end
+
   def self.delete(id)
     sql = "DELETE FROM artists WHERE id = $1"
     values = [id]
